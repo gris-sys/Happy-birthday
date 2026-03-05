@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inumaki Toge · manga birthday · blue</title>
+    <!-- Google Fonts with manga-friendly styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Comic+Neue:wght@700&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --manga-black: #111;
+            --manga-white: #f0f3fa;
+            --manga-red: #d32f2f;
+            --manga-screen: #b3c7e5;
+            --manga-screen-light: #d4e0f5;
+            --pastel-blue-dark: #7fa9d0;
+            --pastel-blue-light: #b5d4f0;
+            --ink-gray: #1e2b3a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #b5d4f0;  /* pastel blue base */
+            background-image: 
+                linear-gradient(45deg, rgba(30, 60, 120, 0.15) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(30, 60, 120, 0.15) 25%, transparent 25%);
+            background-size: 40px 40px;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--manga-black);
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            transition: background 0.3s, background-image 0.3s, filter 0.3s;
+        }
+        
+        /* HIGH CONTRAST MANGA MODE */
+        body.manga-mode-contrast {
+            background: #0a0f1e !important;  /* very dark blue-black */
+            background-image: 
+                linear-gradient(45deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%) !important;
+            background-size: 30px 30px !important;
+            color: white;
+        }
+        
+        body.manga-mode-contrast .panel-card {
+            background: #1e1e2f;
+            border: 6px solid white;
+            box-shadow: 12px 12px 0 white;
+            color: white;
+        }
+        
+        body.manga-mode-contrast .panel-card::after {
+            background: linear-gradient(45deg, transparent 50%, white 50%);
+        }
+        
+        body.manga-mode-contrast h1 {
+            text-shadow: 4px 4px 0 #ff66b2;
+            -webkit-text-stroke: 2px white;
+        }
+        
+        body.manga-mode-contrast .speech-bubble,
+        body.manga-mode-contrast .btn-manga,
+        body.manga-mode-contrast .nav-btn-manga,
+        body.manga-mode-contrast .layer-indicator-manga {
+            background: black;
+            color: white;
+            border: 4px solid white;
+            box-shadow: 8px 8px 0 white;
+        }
+        
+        body.manga-mode-contrast .character-img,
+        body.manga-mode-contrast .popout-image {
+            filter: grayscale(100%) contrast(150%) brightness(0.9);
+            border: 6px solid white;
+        }
+        
+        body.manga-mode-contrast .impact-word {
+            background: white;
+            color: black;
+            border-right: 5px solid #ff66b2;
+        }
+        
+        body.manga-mode-contrast .music-player {
+            background: #0a0f1e;
+            border: 4px solid white;
+            color: white;
+        }
+        
+        body.manga-mode-contrast footer {
+            background: #0a0f1e;
+            border-top: 8px solid #ff66b2;
+            color: white;
+        }
+        
+        /* manga screentone overlay (blue tint) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"><circle cx="1" cy="1" r="0.8" fill="%231e3a5f" opacity="0.2"/><circle cx="3" cy="3" r="0.8" fill="%231e3a5f" opacity="0.2"/></svg>');
+            opacity: 0.6;
+            z-index: 1;
+        }
+        
+        /* speed lines for action */
+        .speed-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            background: repeating-linear-gradient(45deg, rgba(10, 30, 60, 0.05) 0px, rgba(10, 30, 60, 0.05) 10px, transparent 10px, transparent 20px);
+        }
+        
+        body.manga-mode-contrast .speed-lines {
+            background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.3) 0px, rgba(255, 255, 255, 0.3) 8px, transparent 8px, transparent 16px);
+        }
+        
+        header {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 20px;
+            background: var(--manga-white);
+            border: 5px solid var(--manga-black);
+            box-shadow: 10px 10px 0 var(--manga-black);
+            transform: rotate(-0.5deg);
+            font-family: 'Archivo Black', sans-serif;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--manga-black);
+            text-shadow: 4px 4px 0 #fbb1c2;  /* pink accent */
+            -webkit-text-stroke: 2px var(--manga-black);
+            paint-order: stroke fill;
+        }
+        
+        .subhead {
+            font-size: 1.5rem;
+            background: var(--manga-black);
+            color: var(--manga-white);
+            display: inline-block;
+            padding: 10px 30px;
+            margin-top: 15px;
+            border-radius: 0px;
+            transform: skewX(-10deg);
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 5;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+        
+        /* manga panel card */
+        .panel-card {
+            background: var(--manga-white);
+            border: 4px solid var(--manga-black);
+            box-shadow: 8px 8px 0 var(--manga-black);
+            padding: 25px;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        
+        .panel-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 12px 12px 0 var(--manga-black);
+        }
+        
+        /* torn paper effect */
+        .panel-card::after {
+            content: '';
+            position: absolute;
+            top: -10px; right: -10px;
+            width: 30px; height: 30px;
+            background: linear-gradient(45deg, transparent 50%, var(--manga-black) 50%);
+            border-bottom-left-radius: 10px;
+        }
+        
+        .character-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* inumaki toge image with manga halftone */
+        .character-img {
+            width: 280px;
+            height: 320px;
+            object-fit: cover;
+            border: 5px solid var(--manga-black);
+            filter: grayscale(10%) contrast(120%);
+            position: relative;
+            box-shadow: 15px 15px 0 rgba(0,0,0,0.8);
+            background: #b0c4de; /* fallback color */
+        }
+        
+        .img-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .img-container::before {
+            content: '“おいしい”';
+            position: absolute;
+            bottom: -15px;
+            right: -30px;
+            background: white;
+            border: 3px solid black;
+            padding: 10px 20px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            transform: rotate(5deg);
+            box-shadow: 5px 5px 0 black;
+            z-index: 10;
+            font-family: 'Comic Neue', cursive;
+            color: var(--manga-red);
+            letter-spacing: 2px;
+        }
+        
+        .img-container::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            right: 40px;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-left: 3px solid black;
+            border-bottom: 3px solid black;
+            transform: rotate(45deg);
+            z-index: 5;
+        }
+        
+        .speech-bubble {
+            background: white;
+            border: 4px solid black;
+            padding: 20px 30px;
+            font-size: 2rem;
+            font-weight: 900;
+            position: relative;
+            margin: 20px 0;
+            box-shadow: 10px 10px 0 black;
+            max-width: 400px;
+            font-family: 'Comic Neue', cursive;
+            text-transform: uppercase;
+        }
+        
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 30px;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-right: 4px solid black;
+            border-bottom: 4px solid black;
+            transform: rotate(45deg);
+        }
+        
+        .music-player {
+            background: var(--manga-black);
+            padding: 20px;
+            margin: 20px 0;
+            color: var(--manga-white);
+            font-family: monospace;
+            border: 3px solid white;
+        }
+        
+        .music-player audio {
+            width: 100%;
+            background: white;
+            border-radius: 0;
+            outline: none;
+            height: 40px;
+        }
+        
+        /* style audio controls to match manga theme */
+        .music-player audio::-webkit-media-controls-panel {
+            background: #f0f3fa;
+            border-radius: 0;
+        }
+        
+        .music-player audio::-webkit-media-controls-play-button,
+        .music-player audio::-webkit-media-controls-mute-button {
+            border-radius: 0;
+            background-color: black;
+            color: white;
+        }
+        
+        .sound-effect {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--manga-red);
+            -webkit-text-stroke: 2px black;
+            text-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+            transform: rotate(-3deg);
+            display: inline-block;
+            margin: 15px;
+        }
+        
+        .impact-word {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3rem;
+            background: black;
+            color: white;
+            padding: 5px 20px;
+            display: inline-block;
+            transform: skewX(-10deg);
+            border-right: 5px solid #fbb1c2;
+        }
+        
+        .balloon-manga {
+            display: inline-block;
+            font-size: 3rem;
+            margin: 0 8px;
+            filter: drop-shadow(4px 6px 0 black);
+            transition: 0.1s;
+            cursor: pointer;
+        }
+        
+        .balloon-manga:hover {
+            transform: scale(1.3) rotate(5deg);
+            filter: drop-shadow(8px 10px 0 black);
+        }
+        
+        .balloon-manga.popping {
+            animation: mangaPop 0.2s forwards;
+        }
+        
+        @keyframes mangaPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5) rotate(15deg); opacity: 0.5; }
+            100% { transform: scale(0) rotate(30deg); opacity: 0; }
+        }
+        
+        .btn-manga {
+            background: white;
+            border: 4px solid black;
+            color: black;
+            font-weight: 900;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 6px 6px 0 black;
+            transition: 0.1s;
+            text-transform: uppercase;
+            margin: 5px;
+            font-family: 'Archivo Black', sans-serif;
+        }
+        
+        .btn-manga:active {
+            transform: translate(4px, 4px);
+            box-shadow: 2px 2px 0 black;
+        }
+        
+        .nav-buttons-manga {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .layer-indicator-manga {
+            background: black;
+            color: white;
+            padding: 15px 30px;
+            font-size: 2rem;
+            font-weight: 900;
+            border: 3px solid white;
+            outline: 3px solid black;
+        }
+        
+        footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 25px;
+            background: black;
+            color: white;
+            border-top: 8px solid #fbb1c2;
+            font-weight: 900;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+        
+        /* layer system */
+        .layers-container {
+            position: relative;
+            min-height: 550px;
+        }
+        
+        .layer {
+            display: none;
+            animation: mangaPanel 0.3s;
+        }
+        
+        .layer.active {
+            display: block;
+        }
+        
+        @keyframes mangaPanel {
+            0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        }
+        
+        /* gift popout styles */
+        .gift-container {
+            position: relative;
+            display: inline-block;
+            margin: 20px;
+        }
+        .popout-image {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            width: 150px;
+            height: 180px;
+            object-fit: cover;
+            border: 5px solid var(--manga-black);
+            box-shadow: 8px 8px 0 black;
+            transition: transform 0.2s;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .popout-image.pop {
+            animation: popOut 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popOut {
+            0% { transform: translateX(-50%) scale(0); }
+            50% { transform: translateX(-50%) scale(1.2); }
+            100% { transform: translateX(-50%) scale(1) translateY(-30px); }
+        }
+        
+        /* confetti style manga */
+        .confetti-manga {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .manga-dot {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: black;
+            border-radius: 50%;
+            animation: fall 3s linear forwards;
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(720deg); }
+        }
+
+        /* note for local testing */
+        .local-note {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="speed-lines"></div>
+    
+    <header>
+        <h1>HAPPY BIRTHDAY</h1>
+        <div class="subhead">JUJUTSU KAISEN STYLE</div>
+    </header>
+
+    <div class="container">
+        <!-- main interactive manga panel -->
+        <div class="panel-card">
+            <div class="character-section">
+                <div class="img-container">
+                    <!-- CORRECT Inumaki Toge image from user's Pinterest link -->
+                    <img class="character-img" src="https://i.pinimg.com/736x/fc/7e/f3/fc7ef3820647dbbb44662cc6fd78e872.jpg" alt="Inumaki Toge" id="mainInumakiImg" onerror="this.onerror=null; this.src='https://i.pinimg.com/736x/5b/04/3e/5b043eaab1e4a143fe18cc31e252248e.jpg';">
+                </div>
+                <div class="speech-bubble">
+                    <div style="font-size: 3rem;">“おいしい”</div>
+                    <div style="font-size: 1.2rem;">(tuna mayo)</div>
+                </div>
+            </div>
+            
+            <!-- music player with local audio file (merged) -->
+            <div class="music-player">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <span class="sound-effect">♪</span>
+                    <span style="font-size: 1.2rem;">NEW WORLD - Deemo Version</span>
+                </div>
+                <audio controls style="width: 100%; background: white; border-radius: 0;">
+                    <source src="birthday-song.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="local-note">🎵 Place your audio file as "birthday-song.mp3" in the same folder.</div>
+            </div>
+            
+            <!-- interactive layered section -->
+            <div class="layers-container">
+                <!-- LAYER 1 - Inumaki introduction -->
+                <div class="layer active" id="layer1">
+                    <div style="text-align: center;">
+                        <span class="impact-word">SPECIAL GRADE</span>
+                        <div style="margin: 25px 0;" id="balloonContainer1">
+                            <span class="balloon-manga" data-balloon="1"><i class="fas fa-balloon" style="color: #fbb1c2;"></i></span>
+                            <span class="balloon-manga" data-balloon="2"><i class="fas fa-balloon" style="color: #9fc5e8;"></i></span>
+                            <span class="balloon-manga" data-balloon="3"><i class="fas fa-balloon" style="color: #cfbaf0;"></i></span>
+                            <span class="balloon-manga" data-balloon="4"><i class="fas fa-balloon" style="color: #ffcdab;"></i></span>
+                        </div>
+                        <div style="font-size: 1.8rem; font-weight: 900;">POP THE BALLOONS!</div>
+                        <button class="btn-manga" id="addBalloonBtn">➕ ADD</button>
+                    </div>
+                </div>
+                
+                <!-- LAYER 2 - Cursed speech -->
+                <div class="layer" id="layer2">
+                    <div style="text-align: center;">
+                        <span class="impact-word" style="background: #d32f2f;">CURSED SPEECH</span>
+                        <div style="font-size: 4rem; margin: 20px;">🍚🍣🍙</div>
+                        <button class="btn-manga" id="lightCandleBtn">🕯️ LIGHT</button>
+                        <div id="candleMessage" style="font-size: 2rem; font-weight: 900; margin-top: 20px; min-height: 60px;"></div>
+                    </div>
+                </div>
+                
+                <!-- LAYER 3 - Gift from Inumaki with popout image -->
+                <div class="layer" id="layer3">
+                    <div style="text-align: center;">
+                        <span class="impact-word">SECRET GIFT</span>
+                        <div class="gift-container" id="giftContainer">
+                            <div style="font-size: 5rem; margin: 20px; cursor: pointer; position: relative; z-index: 5;" id="giftIcon">🎁</div>
+                            <!-- The popout image (same as main character) initially hidden -->
+                            <img src="https://i.pinimg.com/736x/fc/7e/f3/fc7ef3820647dbbb44662cc6fd78e872.jpg" alt="Inumaki pop" class="popout-image" id="popoutInumaki" onerror="this.onerror=null; this.src='https://i.pinimg.com/736x/5b/04/3e/5b043eaab1e4a143fe18cc31e252248e.jpg';">
+                        </div>
+                        <button class="btn-manga" id="openGiftBtn">OPEN</button>
+                        <div id="giftMessage" style="font-size: 1.8rem; font-weight: 900; margin-top: 20px; min-height: 60px;"></div>
+                    </div>
+                </div>
+                
+                <!-- LAYER 4 - Manga party -->
+                <div class="layer" id="layer4">
+                    <div style="text-align: center;">
+                        <span class="impact-word" style="background: #9fc5e8;">JUJUTSU PARTY</span>
+                        <div style="font-size: 3rem; margin: 20px;">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <button class="btn-manga" id="confettiBtn">💥 CONFETTI</button>
+                        <button class="btn-manga" id="partyModeBtn">🌀 MANGA MODE</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- manga navigation -->
+            <div class="nav-buttons-manga">
+                <button class="btn-manga" id="prevBtn">◀ PREV</button>
+                <span class="layer-indicator-manga" id="layerIndicator">1/4</span>
+                <button class="btn-manga" id="nextBtn">NEXT ▶</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <span class="sound-effect" style="font-size: 2rem;">〓〓〓</span>  INUMAKI TOGE · BIRTHDAY  <span class="sound-effect" style="font-size: 2rem;">〓〓〓</span>
+    </footer>
+    
+    <!-- confetti container -->
+    <div class="confetti-manga" id="confettiContainer"></div>
+
+    <script>
+        (function() {
+            // Layer navigation
+            const layers = document.querySelectorAll('.layer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicator = document.getElementById('layerIndicator');
+            let current = 0;
+            const total = layers.length;
+
+            function updateLayer(index) {
+                layers.forEach(l => l.classList.remove('active'));
+                layers[index].classList.add('active');
+                indicator.textContent = (index + 1) + '/' + total;
+                
+                // SPECIAL FIX: When returning to Layer 1, reset all popped balloons so they reappear
+                if (index === 0) { // Layer 1
+                    const balloonContainer = document.getElementById('balloonContainer1');
+                    if (balloonContainer) {
+                        const balloons = balloonContainer.querySelectorAll('.balloon-manga');
+                        balloons.forEach(b => {
+                            b.classList.remove('popping');
+                            b.style.display = 'inline-block';
+                        });
+                    }
+                }
+                
+                // When leaving Layer 3 (gift layer), reset the gift popup
+                if (index !== 2) { // not layer 3
+                    // reset gift layer elements for next time
+                    const popoutImg = document.getElementById('popoutInumaki');
+                    const giftMsg = document.getElementById('giftMessage');
+                    const giftIcon = document.getElementById('giftIcon');
+                    if (popoutImg) {
+                        popoutImg.classList.remove('pop');
+                        // hide it again
+                        popoutImg.style.transform = 'translateX(-50%) scale(0)';
+                    }
+                    if (giftMsg) giftMsg.innerHTML = '';
+                    if (giftIcon) giftIcon.style.opacity = '1'; // ensure visible
+                }
+            }
+
+            nextBtn.addEventListener('click', () => {
+                current = (current + 1) % total;
+                updateLayer(current);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                current = (current - 1 + total) % total;
+                updateLayer(current);
+            });
+
+            // Balloon popping (only for balloons inside layer1)
+            const balloonContainer = document.getElementById('balloonContainer1');
+            if (balloonContainer) {
+                balloonContainer.addEventListener('click', (e) => {
+                    const balloon = e.target.closest('.balloon-manga');
+                    if (balloon && !balloon.classList.contains('popping')) {
+                        balloon.classList.add('popping');
+                        setTimeout(() => {
+                            balloon.style.display = 'none';
+                        }, 190);
+                    }
+                });
+            }
+
+            // Add new balloon
+            document.getElementById('addBalloonBtn')?.addEventListener('click', () => {
+                const newBalloon = document.createElement('span');
+                newBalloon.className = 'balloon-manga';
+                newBalloon.innerHTML = '<i class="fas fa-balloon" style="color: #f9e79f;"></i>';
+                document.getElementById('balloonContainer1').appendChild(newBalloon);
+            });
+
+            // Layer 2 - light candles
+            const candleMsg = document.getElementById('candleMessage');
+            document.getElementById('lightCandleBtn')?.addEventListener('click', () => {
+                candleMsg.innerHTML = '🔥🔥🔥 OKAKA!! 🔥🔥🔥';
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const dot = document.createElement('div');
+                        dot.className = 'manga-dot';
+                        dot.style.left = Math.random() * 100 + '%';
+                        dot.style.top = '-10%';
+                        dot.style.background = '#fbb1c2';
+                        document.getElementById('confettiContainer').appendChild(dot);
+                        setTimeout(() => dot.remove(), 3000);
+                    }, i * 100);
+                }
+            });
+
+            // Layer 3 - gift with popout image
+            const giftMsg = document.getElementById('giftMessage');
+            const popoutImg = document.getElementById('popoutInumaki');
+            const giftIcon = document.getElementById('giftIcon');
+            
+            function openGift() {
+                if (!popoutImg) return;
+                // Show message
+                giftMsg.innerHTML = '🎀  INUMAKI APPEARS!  🎀';
+                // Trigger pop animation
+                popoutImg.classList.add('pop');
+                // Make sure it's visible (animation will handle scale)
+                // Optionally hide the gift icon a bit
+                giftIcon.style.opacity = '0.3';
+                // Add some sound effect dots
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        const dot = document.createElement('div');
+                        dot.className = 'manga-dot';
+                        dot.style.left = Math.random() * 100 + '%';
+                        dot.style.top = '-10%';
+                        dot.style.background = '#fbb1c2';
+                        document.getElementById('confettiContainer').appendChild(dot);
+                        setTimeout(() => dot.remove(), 3000);
+                    }, i * 50);
+                }
+            }
+            
+            document.getElementById('openGiftBtn')?.addEventListener('click', openGift);
+            giftIcon?.addEventListener('click', openGift);
+
+            // Layer 4 - confetti and party mode
+            const confettiContainer = document.getElementById('confettiContainer');
+            function createMangaConfetti() {
+                for (let i = 0; i < 20; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'manga-dot';
+                    dot.style.left = Math.random() * 100 + '%';
+                    dot.style.top = '-10%';
+                    dot.style.background = `hsl(${Math.random() * 360}, 80%, 50%)`;
+                    dot.style.width = (Math.random() * 15 + 5) + 'px';
+                    dot.style.height = dot.style.width;
+                    confettiContainer.appendChild(dot);
+                    setTimeout(() => dot.remove(), 3000);
+                }
+            }
+            document.getElementById('confettiBtn')?.addEventListener('click', createMangaConfetti);
+
+            // Party mode toggle (now with HIGH CONTRAST)
+            const body = document.body;
+            document.getElementById('partyModeBtn')?.addEventListener('click', () => {
+                body.classList.toggle('manga-mode-contrast');
+                createMangaConfetti(); // add confetti for fun
+            });
+
+            // Ensure image error fallback for main image and popout
+            const mainImg = document.getElementById('mainInumakiImg');
+            mainImg.onerror = function() {
+                this.src = 'https://i.pinimg.com/736x/5b/04/3e/5b043eaab1e4a143fe18cc31e252248e.jpg';
+            };
+            const popoutImgElem = document.getElementById('popoutInumaki');
+            if (popoutImgElem) {
+                popoutImgElem.onerror = function() {
+                    this.src = 'https://i.pinimg.com/736x/5b/04/3e/5b043eaab1e4a143fe18cc31e252248e.jpg';
+                };
+            }
+
+            // Initial reset
+            updateLayer(0);
+        })();
+    </script>
+</body>
+</html>
